@@ -1,17 +1,26 @@
 import { db } from "@/server/db";
+import { getMyImages } from "@/server/queries";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
 
 async function Images() {
-  const images = await db.query.images.findMany({
-    orderBy: (model, { desc }) => desc(model.createdAt),
-  });
+  const images = await getMyImages();
   return (
     <>
       <h1>Images</h1>
       <ul>
         {images.map((image) => (
-          <li key={image.id}>
-            <img src={image.url} alt={image.name} className="max-w-[250px]" />
+          <li key={image.id} className="w-48">
+            <Link href={`/img/${image.id}`}>
+              <Image
+                src={image.url}
+                alt={image.name}
+                style={{ objectFit: "contain" }}
+                width={192}
+                height={192}
+              />
+            </Link>
           </li>
         ))}
       </ul>
