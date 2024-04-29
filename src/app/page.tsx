@@ -11,7 +11,7 @@ async function Images() {
       <ul>
         {images.map((image) => (
           <li key={image.id}>
-            <img src={image.url} alt={image.name} />
+            <img src={image.url} alt={image.name} className="max-w-[250px]" />
           </li>
         ))}
       </ul>
